@@ -58,26 +58,49 @@ These KPIs form the analytical foundation for understanding campaign value and o
 ## 🧱 Data Model
 *Dataset source: [Social Media Advertisement Performance (Kaggle)](https://www.kaggle.com/datasets/alperenmyung/social-media-advertisement-performance/data)*
 
-The dataset is fully synthetic and structured to mirror real digital advertising systems (e.g., Meta Ads Manager), consisting of four linked tables.
+The dataset is fully synthetic and designed to mirror real digital advertising systems (e.g., Meta Ads Manager).  
+It consists of four linked tables that together represent users, campaigns, creatives and full-funnel behavioral data.
 
-### `users.csv` — Audience Profiles  
+### 📁 Raw Tables
+
+#### `users.csv` — Audience Profiles  
 Demographics, location and interest categories used for segmentation.
 
-### `campaigns.csv` — Campaign Metadata  
+#### `campaigns.csv` — Campaign Metadata  
 Budgets, timelines, campaign types and strategic context.
 
-### `ads.csv` — Creative & Placement  
+#### `ads.csv` — Creative & Placement  
 Format (video/image/carousel), platform and targeting configuration.
 
-### `ad_events.csv` — Behavioral Funnel  
-Impressions, clicks and purchases with timestamps — core for funnel analysis.
+#### `ad_events.csv` — Behavioral Funnel  
+Impressions, clicks and purchases with timestamps — the foundation for funnel KPIs.
+
+### Row Counts (Raw Tables)
+
+> Provides quick visibility into the scale of each data source.
+
+| Table      | Rows    |
+|------------|---------|
+| users      | 10,000  |
+| campaigns  | 50      |
+| ads        | 200     |
+| ad_events  | 400,000 |
+
+### Raw Table Schema Overview  
+*(Schema-level overview of the fields used for modeling and KPI engineering.)*
+
+| Table       | Key Columns | Description |
+|-------------|-------------|-------------|
+| **users** | `user_id`, `user_gender`, `user_age`, `age_group`, `country`, `interests` | Demographics and interests used for audience segmentation. |
+| **campaigns** | `campaign_id`, `name`, `start_date`, `end_date`, `total_budget` | Campaign metadata and budget context. |
+| **ads** | `ad_id`, `campaign_id`, `ad_platform`, `ad_type`, `target_gender`, `target_age_group`, `target_interests` | Creative details and targeting configuration. |
+| **ad_events** | `event_id`, `ad_id`, `user_id`, `timestamp`, `event_type` | Full behavioral funnel: impressions, clicks and purchases. |
+
 
 ---
 
 ## ⚙️ Project Pipeline Overview  
 Click to expand each layer.
-
----
 
 <details>
   <summary><strong>🧩 SQL Layer – Data Modeling & KPI Engineering</strong></summary>
@@ -98,8 +121,6 @@ Full pipeline:
 All Python and Tableau analysis relies on this validated, reproducible SQL layer.
 
 </details>
-
----
 
 <details>
   <summary><strong>🐍 Python Layer – EDA, Insights & Modeling ( **Ongoing Work** ) </strong></summary>
@@ -127,8 +148,6 @@ The Python layer transforms SQL outputs into insights.
 
 </details>
 
----
-
 <details>
   <summary><strong>📊 Tableau Layer – Dashboards & Storytelling</strong></summary>
   <br>
@@ -145,8 +164,6 @@ The Tableau layer will deliver stakeholder-ready dashboards.
 These dashboards summarize the entire analytics pipeline in a format suitable for marketing, commercial and leadership teams.
 
 </details>
-
----
 
 ## 📈 Completed Work
 
