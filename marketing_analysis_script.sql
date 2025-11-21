@@ -13,7 +13,6 @@ UNION ALL
 SELECT 'ad_events' AS table_name, COUNT(*) AS row_count FROM ad_events;
 
 /*
-Expected example:
 users      -> 10 000
 campaigns  -> 50
 ads        -> 200
@@ -427,8 +426,6 @@ SELECT * FROM fact_ad_events;
 DROP TABLE IF EXISTS campaign_daily_kpis_tbl;
 CREATE TABLE campaign_daily_kpis_tbl AS
 SELECT * FROM campaign_daily_kpis;
-
-
 
 DROP TABLE IF EXISTS campaign_cost_kpis_tbl;
 CREATE TABLE campaign_cost_kpis_tbl AS
