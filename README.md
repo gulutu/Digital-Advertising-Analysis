@@ -1,83 +1,74 @@
 # Digital Advertising Performance Analytics  
 **End-to-end SQL → Python → Tableau pipeline for campaign intelligence, audience insights and funnel optimization.**
 
-> **Status:** Actively developed – currently working on audience & segment insights (Python).
+> **Status:** Actively developed – currently working on audience & segment insights in Python.
 
-<img width="912" height="516" alt="image" src="https://github.com/user-attachments/assets/6f9bdde0-9beb-4a35-94e3-5807a8f89a26" />
+<p align="center">
+  <img width="750" alt="image" src="https://github.com/user-attachments/assets/6f9bdde0-9beb-4a35-94e3-5807a8f89a26" />
+</p>
+
 
 ---
 
-## 🔎 Project Overview
+## Project Overview
 
-This project simulates a complete analytics environment for a fictitious digital advertising agency running paid campaigns on Facebook and Instagram.  
-The agency invests significant budgets but lacks the analytical infrastructure needed to answer key questions:
+This project builds a complete analytics workflow for a fictional digital advertising agency running campaigns on Facebook and Instagram.  
+The goal is to understand campaign performance, audience behavior, funnel dynamics and opportunities for commercial optimization.
 
-<img width="912" height="615" alt="image" src="https://github.com/user-attachments/assets/08df89f6-099d-4bec-bc96-4b2a5b046276" />
-
-- Which campaigns actually perform – and why?  
+Key questions investigated include:
+- Which campaigns perform well - and why?  
 - Which audiences respond best?  
-- Which formats, platforms and creatives deliver the strongest results?  
-- Where in the funnel do users drop off?  
-- How should budgets be reallocated to maximize ROI?  
+- Which platforms, formats and creatives drive results?  
+- Where does users drop off in the funnel?  
+- How should budgets be reallocated to improve ROI?  
+<p align="center">
+<img width="750"  alt="image" src="https://github.com/user-attachments/assets/08df89f6-099d-4bec-bc96-4b2a5b046276" />
+</p>
 
-To solve this, the project builds a **analytics workflow** combining:
+To answer these questions, the project integrates an SQL → Python → Tableau workflow:
 
-<img width="912" height="516" alt="image" src="https://github.com/user-attachments/assets/2a5cabd0-60e0-4075-bf73-359165d5fcd9" />
+<p align="center">
+<img width="750" alt="image" src="https://github.com/user-attachments/assets/2a5cabd0-60e0-4075-bf73-359165d5fcd9" />
+</p>  
 
 ---
 
-## 📊 Core Metrics & KPIs
+## Core Metrics & KPIs
 
 ### Funnel Metrics
-- **Impressions** – how often ads were shown  
-- **Clicks** – engagement events  
-- **Purchases** – final conversion  
+- **Impressions** – how often ads were shown
+- **Clicks** – engagement events
+- **Purchases** – final conversion
 
 ### Rate KPIs
-- **CTR** (click-through rate)  
-  Measures attention and engagement quality  
-- **CVR (view-based)**  
-  Overall conversion effectiveness  
-- **CVR (click-based)**  
-  Post-click quality: landing page relevance & high-intent behavior  
-
-
+- **CTR** (click-through rate) - Measures attention and engagement quality  
+- **CVR (view-based)** - Overall conversion effectiveness  
+- **CVR (click-based)** - Post-click quality: landing page relevance & high-intent behavior  
 
 ### Cost KPIs
 - **CPM** – cost per 1000 impressions  
 - **CPC** – cost per click  
-- **CPA** – cost per purchase (commercial efficiency)  
-
-
+- **CPA** – cost per purchase  
 
 These KPIs form the analytical foundation for understanding campaign value and optimization opportunities.
 
 
 ---
 
-## 🧱 Data Model
+## Data Model
 *Dataset source: [Social Media Advertisement Performance (Kaggle)](https://www.kaggle.com/datasets/alperenmyung/social-media-advertisement-performance/data)*
 
-The dataset is fully synthetic and designed to mirror real digital advertising systems (e.g., Meta Ads Manager).  
+The dataset is fully synthetic and designed to mirror real digital advertising systems.  
 It consists of four linked tables that together represent users, campaigns, creatives and full-funnel behavioral data.
 
-### 📁 Raw Tables
+### Raw Tables
+- **Audience Profiles** (`users.csv`) — Demographics, location and interest categories  
+- **Campaign Metadata** (`campaigns.csv`) — budgets, timelines and campaign types  
+- **Creative & Placement** (`ads.csv`) — format (video/image/carousel), platform and targeting settings  
+- **Behaviorals** (`ad_events.csv`) — Impressions, clicks and purchases with timestamps  
 
-#### `users.csv` — Audience Profiles  
-Demographics, location and interest categories used for segmentation.
 
-#### `campaigns.csv` — Campaign Metadata  
-Budgets, timelines, campaign types and strategic context.
-
-#### `ads.csv` — Creative & Placement  
-Format (video/image/carousel), platform and targeting configuration.
-
-#### `ad_events.csv` — Behavioral Funnel  
-Impressions, clicks and purchases with timestamps — the foundation for funnel KPIs.
-
-### Row Counts (Raw Tables)
-
-> Provides quick visibility into the scale of each data source.
+### Row Counts
 
 | Table      | Rows    |
 |------------|---------|
@@ -86,8 +77,7 @@ Impressions, clicks and purchases with timestamps — the foundation for funnel 
 | ads        | 200     |
 | ad_events  | 400,000 |
 
-### Raw Table Schema Overview  
-*(Schema-level overview of the fields used for modeling and KPI engineering.)*
+### Raw Table Schema Overview 
 
 | Table       | Key Columns | Description |
 |-------------|-------------|-------------|
@@ -99,126 +89,89 @@ Impressions, clicks and purchases with timestamps — the foundation for funnel 
 
 ---
 
-## ⚙️ Project Pipeline Overview  
+## Project Pipeline Overview  
 Click to expand each layer.
 
+
 <details>
-  <summary><strong>🧩 SQL Layer – Data Modeling & KPI Engineering</strong></summary>
+  <summary><strong>SQL Layer — Data Modeling & KPI Engineering</strong></summary>
   <br>
 
-The SQL layer builds the analytical backbone of the project.  
-Full pipeline:  
-➡️ <a href="./marketing_analysis_script.sql">marketing_analysis_script.sql</a>
+The SQL layer establishes the analytical foundation.
 
-**Contains:**
-- Data cleaning and sanity checks  
-- Join logic between users, ads, campaigns and events  
-- Fact and dimension structures  
-- Materialized analytical tables (`*_tbl`) for performance  
-- KPI engineering for funnel, cost and segment metrics  
-- Funnel validation and timestamp standardization  
+**Includes:**
+- Data cleaning and validation  
+- Joins across users × ads × campaigns × events  
+- Fact/dimension style structures  
+- Materialized tables (`*_tbl`) for performance  
+- KPI engineering (CTR, CVR, CPM, CPC, CPA)  
+- Funnel and timestamp consistency checks  
 
-All Python and Tableau analysis relies on this validated, reproducible SQL layer.
-
+SQL-script ➡️ <a href="./marketing_analysis_script.sql">marketing_analysis_script.sql</a>
 </details>
 
+
 <details>
-  <summary><strong>🐍 Python Layer – EDA, Insights & Modeling ( **Ongoing Work** ) </strong></summary>
+  <summary><strong>Python Layer — EDA, Insights & Modeling (ongoing)</strong></summary>
   <br>
 
-The Python layer transforms SQL outputs into insights.
-
-### Completed:
-- Campaign overview (budget, volume, funnel exploration)  
-- KPI distributions (CTR, CVR, CPC, CPM, CPA)  
+### Completed
+- Campaign-level overview  
+- KPI distribution analysis  
 - Outlier detection  
-- High-budget campaign profiling  
-- Establishing performance heterogeneity across campaigns  
+- Mapping performance heterogeneity across campaigns  
 
-### In progress:
+### In Progress
 - Audience insights & segmentation  
-- KPI performance by age, gender, country and interest groups  
-- Identifying high-intent segments  
-- Funnel drop-off patterns across audiences  
+- CTR/CVR by gender, age, country, interests  
+- Segment-level cost efficiency  
+- Funnel drop-off analysis  
 
-### Planned:
-- Trend analysis (time-based performance)  
-- User × campaign modeling  
-- Predictive modeling for purchase likelihood (optional)
-
+### Planned
+- Time-based performance patterns  
+- User × campaign modeling    
 </details>
 
 <details>
-  <summary><strong>📊 Tableau Layer – Dashboards & Storytelling</strong></summary>
+  <summary><strong>Tableau Layer — Dashboards (upcoming)</strong></summary>
   <br>
 
-The Tableau layer will deliver stakeholder-ready dashboards.
-
-### Planned dashboards:
+Planned dashboards:
 - Campaign Performance Overview  
 - Audience & Segment Insights  
-- Funnel Breakdown & Drop-Off Explorer  
-- Cost Efficiency & ROI Dashboard  
-- Time-based Trends and Pacing  
-
-These dashboards summarize the entire analytics pipeline in a format suitable for marketing, commercial and leadership teams.
-
+- Funnel Drop-Off Explorer  
+- Cost & ROI Dashboard  
+- Time-based Trends  
 </details>
 
-## 📈 Completed Work
+---
+
+## Completed Work
 
 ### **Data Engineering & Validation**
 - Cleaning and profiling of all raw sources  
 - Construction of analytic SQL views and materialized tables  
-- Funnel logic verification (impressions ≥ clicks ≥ purchases)  
-- Demographic consistency checks  
-- KPI-range validation for CTR, CVR and cost metrics  
+- Demographic and KPI-range validation  
 
 ### **Campaign Performance Analysis**
 - Distribution of budgets and funnel volumes  
 - Log-scale outlier detection  
 - KPI variability analysis (rate + cost KPIs)  
-- Identification of high- and low-performing campaigns  
-
-This phase establishes the overall performance landscape and prepares the ground for deeper audience-level insights.
+- Identification of high-/low-performing campaigns  
 
 ---
 
-## 👥 Current Focus: Audience Insights & Segments
+## Current Focus: Audience Insights & Segments
 
-Using `segment_performance_kpis_tbl` and enriched event data, the project now focuses on:
+Using `segment_performance_kpis_tbl` and enriched event data, the analysis now focuses on:
 
-- How different demographics respond to campaigns  
-- Which segments have strong or weak CTR/CVR  
-- Cost efficiency across audience groups  
-- Identifying high-intent vs low-intent audiences  
+- Demographic response patterns  
+- CTR/CVR differences across audience groups  
+- Cost efficiency per segment  
+- Identifying high-intent vs low-intent users  
 - Segment-level optimization opportunities  
 
-This step connects campaign performance to audience behavior — crucial for targeting, budgeting and creative strategy.
 
 ---
 
-## 🔮 Next Steps
-
-### Upcoming analysis
-- Deeper user-level insights (repeat engagement, multi-touch behavior)  
-- User × campaign modeling  
-- Temporal insights (daily performance, early/late campaign behavior)  
-
-### Upcoming deliverables
-- Full Tableau dashboards  
-- Commercial recommendations & optimization scenarios  
-- Optional predictive modeling for conversion drivers  
-
----
-
-## 🎯 What does this project intent to demonstrate?
-
-This project demonstrates how to:
-
-- Build a scalable analytics pipeline from scratch  
-- Transform raw event data into actionable insights  
-- Combine SQL, Python and Tableau in one unified workflow  
-- Evaluate campaign, funnel and audience performance with depth  
-- Generate insights that support real commercial decision-making  
 
